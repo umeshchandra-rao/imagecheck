@@ -4,10 +4,22 @@ Handles vector storage, indexing, and similarity search
 """
 
 import logging
+import sys
 from typing import List, Dict, Any, Optional
+from pathlib import Path
 from pinecone import Pinecone, ServerlessSpec
 import numpy as np
-from config import config
+
+# Setup path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+# Handle both module and direct imports
+try:
+    from backend.config import Config
+    config = Config
+except ImportError:
+    from config import Config
+    config = Config
 
 logger = logging.getLogger(__name__)
 

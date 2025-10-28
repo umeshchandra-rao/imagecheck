@@ -6,10 +6,22 @@ Provides caching layer to avoid redundant computations
 import logging
 import hashlib
 import pickle
-from typing import Optional, List
-import redis
-from config import config
+import sys
 import os
+from typing import Optional, List
+from pathlib import Path
+import redis
+
+# Setup path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+# Handle both module and direct imports
+try:
+    from backend.config import Config
+    config = Config
+except ImportError:
+    from config import Config
+    config = Config
 
 logger = logging.getLogger(__name__)
 

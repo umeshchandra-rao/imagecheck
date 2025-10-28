@@ -14,14 +14,23 @@ from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 from PIL import Image
 import uvicorn
-import config
+
+# Setup path before any local imports
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+# Handle both module and direct imports
+try:
+    from backend.config import Config
+    config = Config
+except ImportError:
+    from config import Config
+    config = Config
+
 from services.cloudinary_service import CloudinaryImageService
 from services.pinecone_service import PineconeVectorService
 
-
-# Load .env before importing config
+# Load .env after path setup
 load_dotenv()
-sys.path.insert(0, str(Path(__file__).parent.parent))
 
 
 logging.basicConfig(level=logging.INFO)
@@ -40,26 +49,34 @@ def get_feature_extractor():
 
         if extractor_type == 'vit':
             try:
-                from ml.feature_extractors.vit_extractor import ViTFeatureExtractor
+                from ml.feature_extractors.vit_extractor import (
+                    ViTFeatureExtractor
+                )
                 feature_extractor = ViTFeatureExtractor()
                 logger.info("Using ViT feature extractor")
             except Exception as e:
                 logger.warning(f"ViT not available: {e}. Using ResNet.")
-                from ml.unified_feature_extractor import UnifiedFeatureExtractor
+                from ml.unified_feature_extractor import (
+                    UnifiedFeatureExtractor
+                )
                 feature_extractor = UnifiedFeatureExtractor(
                     feature_dim=config.FEATURE_DIMENSION,
                     use_amp=True
                 )
         elif extractor_type == 'ensemble':
             try:
-                from ml.feature_extractors.ensemble_extractor import EnsembleFeatureExtractor
+                from ml.feature_extractors.ensemble_extractor import (
+                    EnsembleFeatureExtractor
+                )
                 feature_extractor = EnsembleFeatureExtractor(
                     feature_dim=config.FEATURE_DIMENSION
                 )
                 logger.info("Using Ensemble feature extractor")
             except Exception as e:
                 logger.warning(f"Ensemble not available: {e}. Using ResNet.")
-                from ml.unified_feature_extractor import UnifiedFeatureExtractor
+                from ml.unified_feature_extractor import (
+                    UnifiedFeatureExtractor
+                )
                 feature_extractor = UnifiedFeatureExtractor(
                     feature_dim=config.FEATURE_DIMENSION,
                     use_amp=True

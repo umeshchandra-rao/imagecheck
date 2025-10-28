@@ -4,12 +4,24 @@ Handles image upload, optimization, and delivery via CDN
 """
 
 import os
+import sys
 import logging
 from typing import Optional, Dict, Any
+from pathlib import Path
 import cloudinary
 import cloudinary.uploader
 from cloudinary import CloudinaryImage
-from config import config
+
+# Setup path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+# Handle both module and direct imports
+try:
+    from backend.config import Config
+    config = Config
+except ImportError:
+    from config import Config
+    config = Config
 
 logger = logging.getLogger(__name__)
 
