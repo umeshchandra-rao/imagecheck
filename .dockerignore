@@ -40,6 +40,14 @@ Thumbs.db
 testingimages/*
 !testingimages/.gitkeep
 
+# Ignore training images (already in Cloudinary - 3000+ files)
+images/
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+
 # Ignore Git
 .git/
 .gitignore
