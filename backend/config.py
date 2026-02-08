@@ -25,9 +25,14 @@ class Config:
     FEATURE_DIMENSION = int(os.getenv('FEATURE_DIMENSION', '2048'))  # 2048 or 512
     
     # Quantum Configuration
-    USE_QUANTUM_INSPIRED = os.getenv('USE_QUANTUM_INSPIRED', 'True').lower() == 'true'
+    QUANTUM_MODE = os.getenv('QUANTUM_MODE', 'inspired')  # 'inspired' or 'qiskit'
+    USE_QUANTUM_INSPIRED = (QUANTUM_MODE == 'inspired')  # Derived from QUANTUM_MODE
+    USE_QUANTUM_SIMILARITY = os.getenv('USE_QUANTUM_SIMILARITY', 'true').lower() == 'true'
     N_ENCODING_QUBITS = int(os.getenv('N_ENCODING_QUBITS', '3'))
     N_AUXILIARY_QUBITS = int(os.getenv('N_AUXILIARY_QUBITS', '7'))
+    QUANTUM_PRECISION_QUBITS = int(os.getenv('QUANTUM_PRECISION_QUBITS', '7'))
+    ENABLE_QUANTUM_ENTANGLEMENT = os.getenv('ENABLE_QUANTUM_ENTANGLEMENT', 'false').lower() == 'true'
+    ENABLE_QUANTUM_LOGGING = os.getenv('ENABLE_QUANTUM_LOGGING', 'true').lower() == 'true'
     
     # Server Configuration
     HOST = os.getenv('HOST', '0.0.0.0')

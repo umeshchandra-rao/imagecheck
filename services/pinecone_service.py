@@ -110,6 +110,63 @@ class PineconeVectorService:
             logger.error(f"❌ Upsert failed: {e}")
             return False
     
+    def upsert_vectors_batch(
+        self,
+        vectors_data: List[Dict[str, Any]]
+    ) -> bool:
+        """
+        Batch insert/update multiple vectors in Pinecone
+        
+        Args:
+            vectors_data: List of dicts with 'id', 'values', 'metadata'
+            
+        Returns:
+            True if successful
+        """
+        try:
+            if not vectors_data:
+                return True
+            
+            # Prepare batch
+            batch = []
+            for item in vectors_data:
+                features = item['values']
+                
+                # Ensure features is a list
+                if isinstance(features, np.ndarray):
+                    features = features.tolist()
+                
+                # Validate dimension
+                if len(features) != config.FEATURE_DIMENSION:
+                    if len(features) < config.FEATURE_DIMENSION:
+                        features = features + [0.0] * (config.FEATURE_DIMENSION - len(features))
+                    else:
+                        features = features[:config.FEATURE_DIMENSION]
+                
+                batch.append({
+                    'id': item['id'],
+                    'values': features,
+                    'metadata': item['metadata']
+                })
+            
+            # Batch upsert (Pinecone supports up to 100-200 vectors per batch)
+            # Using 100 for optimal performance
+            batch_size = 100
+            total_batches = (len(batch) + batch_size - 1) // batch_size
+            
+            for i in range(0, len(batch), batch_size):
+                batch_chunk = batch[i:i+batch_size]
+                self.index.upsert(vectors=batch_chunk)
+                batch_num = (i // batch_size) + 1
+                logger.info(f"✅ Batch {batch_num}/{total_batches}: {len(batch_chunk)} vectors indexed")
+            
+            logger.info(f"🎯 Total indexed: {len(batch)} vectors in {total_batches} batches")
+            return True
+            
+        except Exception as e:
+            logger.error(f"❌ Batch upsert failed: {e}")
+            return False
+    
     def search(
         self,
         query_features: List[float],
@@ -153,7 +210,8 @@ class PineconeVectorService:
                 vector=query_features,
                 top_k=top_k,
                 filter=filter_dict,
-                include_metadata=True
+                include_metadata=True,
+                include_values=True  # IMPORTANT: Include vectors for quantum re-ranking
             )
             
             # Process results
@@ -166,7 +224,8 @@ class PineconeVectorService:
                     matches.append({
                         'id': match['id'],
                         'score': float(score),
-                        'metadata': match.get('metadata', {})
+                        'metadata': match.get('metadata', {}),
+                        'values': match.get('values', [])  # Include vector values
                     })
             
             logger.info(f"✅ Found {len(matches)} matches (threshold: {min_score})")

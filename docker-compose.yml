@@ -10,13 +10,15 @@ services:
       - "8000:8000"
       - "5000:5000"
     environment:
-      - CLOUDINARY_CLOUD_NAME=ddyytqwbq
-      - CLOUDINARY_API_KEY=315439667751671
-      - CLOUDINARY_API_SECRET=J9F8TguFx9Xw9TgCyLAamS2jGF0
-      - PINECONE_API_KEY=pcsk_6ymDQY_CpQG5yUj1BpjFYuD1g9KyuMFzebjbP1zvYXZ1v2jM7JLnevcgeLRbJTUGZxQqAM
-      - PINECONE_ENVIRONMENT=us-east-1
-      - PINECONE_INDEX_NAME=quantum-images-prod
+      - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
+      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
+      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
+      - PINECONE_API_KEY=${PINECONE_API_KEY}
+      - PINECONE_ENVIRONMENT=${PINECONE_ENVIRONMENT:-us-east-1}
+      - PINECONE_INDEX_NAME=${PINECONE_INDEX_NAME:-quantum-images-prod}
       - PYTHONUNBUFFERED=1
+    env_file:
+      - .env
     volumes:
       - ./data/uploads:/app/data/uploads
     healthcheck:

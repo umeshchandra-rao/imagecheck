@@ -4,8 +4,13 @@
     {
       "label": "Start Backend Server",
       "type": "shell",
-      "command": "python",
-      "args": ["-m", "uvicorn", "backend_server:app", "--host", "0.0.0.0", "--port", "8000", "--reload"],
+      "command": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": ["-m", "uvicorn", "backend.backend_server:app", "--host", "0.0.0.0", "--port", "8000", "--reload"],
+      "options": {
+        "env": {
+          "PYTHONNOUSERSITE": "1"
+        }
+      },
       "isBackground": true,
       "problemMatcher": [],
       "presentation": {

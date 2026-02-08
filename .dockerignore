@@ -39,3 +39,29 @@ Thumbs.db
 # Ignore test images (optional)
 testingimages/*
 !testingimages/.gitkeep
+
+# Ignore Git
+.git/
+.gitignore
+.gitattributes
+
+# Ignore Railway
+.railway/
+
+# Ignore documentation (saves build time)
+*.md
+!README.md
+
+# Ignore Windows specific
+*.bat
+
+# Ignore Node modules (will be installed in build)
+node_modules/
+frontend/node_modules/
+
+# Ignore Python cache
+*.pyc
+__pycache__/
+
+# Ignore VS Code
+.vscode/
