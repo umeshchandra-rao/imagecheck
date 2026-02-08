@@ -42,6 +42,13 @@ data/
 uploads/
 *.log
 
+# Training Images (already in Cloudinary - 3000+ files)
+images/
+*.jpg
+*.jpeg
+*.png
+*.gif
+
 # IDE
 .idea/
 *.swp
