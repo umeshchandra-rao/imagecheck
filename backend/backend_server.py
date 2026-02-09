@@ -9,6 +9,8 @@ from pathlib import Path
 from dotenv import load_dotenv
 from fastapi import FastAPI, File, UploadFile, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
@@ -109,6 +111,36 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)  # ty
 
 @app.get('/')
 async def root():
+    """Serve frontend or API info based on environment"""
+    # In production with frontend, serve index.html
+    frontend_index = project_root / 'frontend' / 'dist' / 'index.html'
+    if frontend_index.exists():
+        return FileResponse(frontend_index)
+    
+    # Fallback: return API info (for dev/testing)
+    quantum_info = {'enabled': False}
+    if config.USE_QUANTUM_SIMILARITY:
+        quantum_algo = get_quantum_algorithm()
+        if quantum_algo:
+            quantum_info = {
+                'enabled': True,
+                'mode': config.QUANTUM_MODE,
+                'circuit': quantum_algo.get_circuit_info()
+            }
+    
+    return {
+        'message': 'Quantum Image API v3.0',
+        'storage': 'Cloudinary',
+        'vectors': 'Pinecone',
+        'quantum': quantum_info,
+        'features': ['rate-limiting', 'quantum-enhanced', 'batch-upload'],
+        'database_size': get_pinecone_service().get_statistics()['total_vector_count']
+    }
+
+
+@app.get('/api/info')
+async def api_info():
+    """API information endpoint"""
     quantum_info = {'enabled': False}
     if config.USE_QUANTUM_SIMILARITY:
         quantum_algo = get_quantum_algorithm()
@@ -459,6 +491,28 @@ async def get_image(image_id: str):
     except Exception as e:
         logger.error(f"Get image error: {e}")
         raise HTTPException(500, str(e))
+
+
+# Serve frontend static files in production
+frontend_dist = project_root / 'frontend' / 'dist'
+if frontend_dist.exists():
+    # Serve static assets (JS, CSS, images)
+    app.mount('/assets', StaticFiles(directory=frontend_dist / 'assets'), name='assets')
+    
+    # Serve index.html for all non-API routes (SPA fallback)
+    @app.get('/{full_path:path}')
+    async def serve_spa(full_path: str):
+        # Don't serve index.html for API routes
+        if full_path.startswith('api/'):
+            raise HTTPException(404, 'Not found')
+        index_file = frontend_dist / 'index.html'
+        if index_file.exists():
+            return FileResponse(index_file)
+        raise HTTPException(404, 'Frontend not found')
+    
+    logger.info(f'✅ Frontend served from {frontend_dist}')
+else:
+    logger.warning(f'⚠️ Frontend dist not found at {frontend_dist}')
 
 
 if __name__ == '__main__':

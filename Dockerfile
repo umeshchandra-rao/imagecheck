@@ -34,12 +34,12 @@ COPY --from=frontend-builder /app/frontend/dist ./frontend/dist
 # Create necessary directories
 RUN mkdir -p /app/data/uploads
 
-# Expose ports
-EXPOSE 8000 5000
+# Expose single port (backend serves both API and frontend)
+EXPOSE 8000
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:8000/health || exit 1
 
-# Start both services
-CMD ["sh", "-c", "python -m backend.backend_server & python -m http.server 5000 --directory frontend/dist"]
+# Start backend server (serves both API and frontend static files)
+CMD ["python", "-m", "uvicorn", "backend.backend_server:app", "--host", "0.0.0.0", "--port", "8000"]
