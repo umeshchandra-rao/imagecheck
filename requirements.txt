@@ -9,7 +9,8 @@ cloudinary>=1.44.0
 # Pinecone Vector Database
 pinecone>=7.0.0
 
-# Deep Learning & Computer Vision
+# Deep Learning & Computer Vision (CPU-only for cloud deployment - no CUDA)
+--extra-index-url https://download.pytorch.org/whl/cpu
 torch>=2.6.0
 torchvision>=0.17.0
 Pillow>=10.4.0
