@@ -17,6 +17,9 @@ from slowapi.errors import RateLimitExceeded
 from PIL import Image
 import uvicorn
 
+# Metrics collection imports
+from scripts.metrics_integration import metrics_collector, track_api_latency, track_model_inference
+
 # Setup path - add parent directory to path so imports work
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
@@ -44,6 +47,9 @@ feature_extractor = None
 cloudinary_service = None
 pinecone_service = None
 quantum_algorithm = None
+
+# Initialize metrics collector
+metrics_collector.project_name = "Quantum Flow - Image Analysis API"
 
 
 def get_feature_extractor():
@@ -163,6 +169,7 @@ async def api_info():
 
 @app.post('/api/upload')
 @limiter.limit("20/minute")
+@track_api_latency("image_upload_search")
 async def upload_image(request: Request, file: UploadFile = File(...)):
     try:
         start_time = time.time()
@@ -201,6 +208,7 @@ async def upload_image(request: Request, file: UploadFile = File(...)):
 
 @app.post('/api/upload-and-store')
 @limiter.limit("10/minute")
+@track_api_latency("image_upload_store")
 async def upload_and_store(
     request: Request,
     file: UploadFile = File(...),
@@ -274,6 +282,7 @@ async def get_stats():
 
 @app.post('/api/search-quantum')
 @limiter.limit("30/minute")
+@track_api_latency("quantum_search")
 async def search_images_quantum(request: Request, file: UploadFile = File(...)):
     """Quantum-enhanced image search with re-ranking"""
     try:
@@ -355,6 +364,7 @@ async def search_images_quantum(request: Request, file: UploadFile = File(...)):
 
 @app.post('/api/search-quantum-detailed')
 @limiter.limit("10/minute")
+@track_api_latency("quantum_search_detailed")
 async def search_quantum_detailed(request: Request, file: UploadFile = File(...)):
     """Quantum search with full breakdown for demos and analysis"""
     try:
@@ -445,6 +455,7 @@ async def get_categories():
 
 @app.post('/api/search')
 @limiter.limit("30/minute")
+@track_api_latency("vector_search")
 async def search_by_features(request: Request, features: list):
     """Search images by feature vector"""
     try:
@@ -490,6 +501,113 @@ async def get_image(image_id: str):
             raise HTTPException(404, "Image not found")
     except Exception as e:
         logger.error(f"Get image error: {e}")
+        raise HTTPException(500, str(e))
+
+
+# ==================== METRICS ENDPOINTS ====================
+
+@app.get('/api/metrics/summary')
+async def get_metrics_summary():
+    """Get performance metrics summary"""
+    try:
+        accuracy_summary = metrics_collector.get_accuracy_summary()
+        latency_summary = metrics_collector.get_latency_summary()
+        efficiency_summary = metrics_collector.get_efficiency_summary()
+        
+        return {
+            'success': True,
+            'accuracy': accuracy_summary,
+            'latency': latency_summary,
+            'efficiency': efficiency_summary,
+            'timestamp': metrics_collector.metrics.get('timestamp')
+        }
+    except Exception as e:
+        logger.error(f"Metrics summary error: {e}")
+        raise HTTPException(500, str(e))
+
+
+@app.post('/api/metrics/record-accuracy')
+async def record_accuracy(
+    model_name: str,
+    accuracy: float,
+    precision: float,
+    recall: float,
+    f1_score: float
+):
+    """Record model accuracy metrics"""
+    try:
+        metrics_collector.record_accuracy(
+            model_name=model_name,
+            accuracy=accuracy,
+            precision=precision,
+            recall=recall,
+            f1_score=f1_score
+        )
+        return {
+            'success': True,
+            'message': f'Recorded accuracy for {model_name}',
+            'metrics': {
+                'accuracy': accuracy,
+                'precision': precision,
+                'recall': recall,
+                'f1_score': f1_score
+            }
+        }
+    except Exception as e:
+        logger.error(f"Record accuracy error: {e}")
+        raise HTTPException(500, str(e))
+
+
+@app.get('/api/metrics/export')
+async def export_metrics_report():
+    """Generate and export metrics as PowerPoint"""
+    try:
+        from scripts.performance_metrics import MetricsVisualizer, PowerPointReportGenerator
+        
+        logger.info("📊 Generating metrics report...")
+        
+        # Create visualizations
+        visualizer = MetricsVisualizer(metrics_collector)
+        visualizer.create_accuracy_comparison_chart()
+        visualizer.create_latency_chart()
+        visualizer.create_throughput_chart()
+        visualizer.create_efficiency_chart()
+        
+        # Save charts
+        chart_dir = visualizer.save_all_figures("api_metrics_charts")
+        logger.info(f"✓ Charts saved to {chart_dir}")
+        
+        # Generate PowerPoint
+        reporter = PowerPointReportGenerator(metrics_collector, visualizer)
+        report_file = reporter.generate_report("API_Performance_Report.pptx")
+        
+        return {
+            'success': True,
+            'message': 'Metrics report generated successfully',
+            'report_file': report_file,
+            'charts_directory': chart_dir
+        }
+    except Exception as e:
+        logger.error(f"Metrics export error: {e}")
+        raise HTTPException(500, str(e))
+
+
+@app.get('/api/metrics/print-summary')
+async def print_metrics_summary():
+    """Print metrics summary to console and return"""
+    try:
+        logger.info("📊 METRICS SUMMARY:")
+        metrics_collector.print_summary()
+        
+        return {
+            'success': True,
+            'message': 'Metrics summary printed to console',
+            'accuracy': metrics_collector.get_accuracy_summary(),
+            'latency': metrics_collector.get_latency_summary(),
+            'efficiency': metrics_collector.get_efficiency_summary()
+        }
+    except Exception as e:
+        logger.error(f"Print summary error: {e}")
         raise HTTPException(500, str(e))
 
 

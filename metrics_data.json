@@ -1,0 +1,541 @@
+{
+  "accuracy": [
+    {
+      "model_name": "ResNet50 Baseline",
+      "accuracy": 0.852,
+      "precision": 0.841,
+      "recall": 0.863,
+      "f1_score": 0.852,
+      "confusion_matrix": {
+        "TP": 86,
+        "FP": 15,
+        "TN": 92,
+        "FN": 8
+      },
+      "timestamp": "2026-02-10T09:38:11.423783"
+    },
+    {
+      "model_name": "Advanced CNN v2",
+      "accuracy": 0.881,
+      "precision": 0.875,
+      "recall": 0.889,
+      "f1_score": 0.882,
+      "confusion_matrix": {
+        "TP": 89,
+        "FP": 12,
+        "TN": 95,
+        "FN": 5
+      },
+      "timestamp": "2026-02-10T09:38:11.423936"
+    },
+    {
+      "model_name": "Quantum Enhanced CNN (AE-QIP)",
+      "accuracy": 0.921,
+      "precision": 0.918,
+      "recall": 0.924,
+      "f1_score": 0.921,
+      "confusion_matrix": {
+        "TP": 92,
+        "FP": 8,
+        "TN": 99,
+        "FN": 2
+      },
+      "timestamp": "2026-02-10T09:38:11.424425"
+    }
+  ],
+  "latency": [
+    {
+      "operation": "Image Upload (Cloudinary)",
+      "latency_ms": 30.178728447466142,
+      "throughput": 33.135922268585894,
+      "timestamp": "2026-02-10T09:38:11.425440"
+    },
+    {
+      "operation": "Image Upload (Cloudinary)",
+      "latency_ms": 36.319350532343464,
+      "throughput": 27.53353199720546,
+      "timestamp": "2026-02-10T09:38:11.427667"
+    },
+    {
+      "operation": "Image Upload (Cloudinary)",
+      "latency_ms": 47.271370381152444,
+      "throughput": 21.154453360182462,
+      "timestamp": "2026-02-10T09:38:11.428979"
+    },
+    {
+      "operation": "Image Upload (Cloudinary)",
+      "latency_ms": 47.98108534751411,
+      "throughput": 20.841546054185073,
+      "timestamp": "2026-02-10T09:38:11.429890"
+    },
+    {
+      "operation": "Image Upload (Cloudinary)",
+      "latency_ms": 51.083014024432714,
+      "throughput": 19.575978808174977,
+      "timestamp": "2026-02-10T09:38:11.430750"
+    },
+    {
+      "operation": "Image Upload (Cloudinary)",
+      "latency_ms": 52.90127775548101,
+      "throughput": 18.90313509292111,
+      "timestamp": "2026-02-10T09:38:11.434454"
+    },
+    {
+      "operation": "Image Upload (Cloudinary)",
+      "latency_ms": 36.166867591261976,
+      "throughput": 27.649615977293067,
+      "timestamp": "2026-02-10T09:38:11.436486"
+    },
+    {
+      "operation": "Image Upload (Cloudinary)",
+      "latency_ms": 57.496710981680565,
+      "throughput": 17.392299192881087,
+      "timestamp": "2026-02-10T09:38:11.438357"
+    },
+    {
+      "operation": "Image Upload (Cloudinary)",
+      "latency_ms": 53.974349561583715,
+      "throughput": 18.52731914553262,
+      "timestamp": "2026-02-10T09:38:11.438694"
+    },
+    {
+      "operation": "Image Upload (Cloudinary)",
+      "latency_ms": 46.220534819104465,
+      "throughput": 21.635405213586303,
+      "timestamp": "2026-02-10T09:38:11.439252"
+    },
+    {
+      "operation": "Image Upload (Cloudinary)",
+      "latency_ms": 43.91032937387565,
+      "throughput": 22.773684785770424,
+      "timestamp": "2026-02-10T09:38:11.441633"
+    },
+    {
+      "operation": "Image Upload (Cloudinary)",
+      "latency_ms": 36.654201773346095,
+      "throughput": 27.282001833884483,
+      "timestamp": "2026-02-10T09:38:11.442630"
+    },
+    {
+      "operation": "Image Upload (Cloudinary)",
+      "latency_ms": 49.0378966622673,
+      "throughput": 20.39239176360229,
+      "timestamp": "2026-02-10T09:38:11.449804"
+    },
+    {
+      "operation": "Image Upload (Cloudinary)",
+      "latency_ms": 45.82603281705171,
+      "throughput": 21.821657658917037,
+      "timestamp": "2026-02-10T09:38:11.453817"
+    },
+    {
+      "operation": "Image Upload (Cloudinary)",
+      "latency_ms": 46.31170438040236,
+      "throughput": 21.59281359601976,
+      "timestamp": "2026-02-10T09:38:11.455278"
+    },
+    {
+      "operation": "Feature Extraction",
+      "latency_ms": 141.7097096460789,
+      "throughput": 7.05667947875631,
+      "timestamp": "2026-02-10T09:38:11.457817"
+    },
+    {
+      "operation": "Feature Extraction",
+      "latency_ms": 114.29517605990468,
+      "throughput": 8.749275642883454,
+      "timestamp": "2026-02-10T09:38:11.461339"
+    },
+    {
+      "operation": "Feature Extraction",
+      "latency_ms": 130.97051839083056,
+      "throughput": 7.635306115349479,
+      "timestamp": "2026-02-10T09:38:11.462539"
+    },
+    {
+      "operation": "Feature Extraction",
+      "latency_ms": 128.18902603383327,
+      "throughput": 7.800979779158844,
+      "timestamp": "2026-02-10T09:38:11.463411"
+    },
+    {
+      "operation": "Feature Extraction",
+      "latency_ms": 118.58142117495015,
+      "throughput": 8.433024246898182,
+      "timestamp": "2026-02-10T09:38:11.464954"
+    },
+    {
+      "operation": "Feature Extraction",
+      "latency_ms": 121.10620787343991,
+      "throughput": 8.257215031000177,
+      "timestamp": "2026-02-10T09:38:11.465875"
+    },
+    {
+      "operation": "Feature Extraction",
+      "latency_ms": 116.0704302599994,
+      "throughput": 8.61545871554009,
+      "timestamp": "2026-02-10T09:38:11.469683"
+    },
+    {
+      "operation": "Feature Extraction",
+      "latency_ms": 109.98953798987417,
+      "throughput": 9.091773802087085,
+      "timestamp": "2026-02-10T09:38:11.471212"
+    },
+    {
+      "operation": "Feature Extraction",
+      "latency_ms": 122.99636324791229,
+      "throughput": 8.130321690767339,
+      "timestamp": "2026-02-10T09:38:11.472817"
+    },
+    {
+      "operation": "Feature Extraction",
+      "latency_ms": 105.7647557520569,
+      "throughput": 9.454945486228782,
+      "timestamp": "2026-02-10T09:38:11.473846"
+    },
+    {
+      "operation": "Feature Extraction",
+      "latency_ms": 144.18203483576383,
+      "throughput": 6.935676841702844,
+      "timestamp": "2026-02-10T09:38:11.474732"
+    },
+    {
+      "operation": "Feature Extraction",
+      "latency_ms": 124.99577472639515,
+      "throughput": 8.000270426651722,
+      "timestamp": "2026-02-10T09:38:11.475629"
+    },
+    {
+      "operation": "Feature Extraction",
+      "latency_ms": 123.49103392613442,
+      "throughput": 8.097753887121435,
+      "timestamp": "2026-02-10T09:38:11.476481"
+    },
+    {
+      "operation": "Feature Extraction",
+      "latency_ms": 143.7149881685641,
+      "throughput": 6.958216486279737,
+      "timestamp": "2026-02-10T09:38:11.478795"
+    },
+    {
+      "operation": "Feature Extraction",
+      "latency_ms": 116.95247666948201,
+      "throughput": 8.550481601395138,
+      "timestamp": "2026-02-10T09:38:11.479758"
+    },
+    {
+      "operation": "Model Inference",
+      "latency_ms": 77.58881252435864,
+      "throughput": 12.888456047526887,
+      "timestamp": "2026-02-10T09:38:11.480655"
+    },
+    {
+      "operation": "Model Inference",
+      "latency_ms": 89.99791449068144,
+      "throughput": 11.111368587363676,
+      "timestamp": "2026-02-10T09:38:11.481697"
+    },
+    {
+      "operation": "Model Inference",
+      "latency_ms": 105.60231381502798,
+      "throughput": 9.469489482508788,
+      "timestamp": "2026-02-10T09:38:11.484126"
+    },
+    {
+      "operation": "Model Inference",
+      "latency_ms": 97.98062267290503,
+      "throughput": 10.206099662566587,
+      "timestamp": "2026-02-10T09:38:11.487356"
+    },
+    {
+      "operation": "Model Inference",
+      "latency_ms": 82.64264489230122,
+      "throughput": 12.100290368286089,
+      "timestamp": "2026-02-10T09:38:11.488402"
+    },
+    {
+      "operation": "Model Inference",
+      "latency_ms": 91.48942921684232,
+      "throughput": 10.930224492163621,
+      "timestamp": "2026-02-10T09:38:11.489883"
+    },
+    {
+      "operation": "Model Inference",
+      "latency_ms": 97.82472326443259,
+      "throughput": 10.222364721614122,
+      "timestamp": "2026-02-10T09:38:11.490335"
+    },
+    {
+      "operation": "Model Inference",
+      "latency_ms": 78.85410941741645,
+      "throughput": 12.681647251971,
+      "timestamp": "2026-02-10T09:38:11.491139"
+    },
+    {
+      "operation": "Model Inference",
+      "latency_ms": 109.8031387475058,
+      "throughput": 9.107207784829514,
+      "timestamp": "2026-02-10T09:38:11.491495"
+    },
+    {
+      "operation": "Model Inference",
+      "latency_ms": 81.62708487138158,
+      "throughput": 12.250835633487133,
+      "timestamp": "2026-02-10T09:38:11.491805"
+    },
+    {
+      "operation": "Model Inference",
+      "latency_ms": 83.04258866165374,
+      "throughput": 12.042013816240367,
+      "timestamp": "2026-02-10T09:38:11.492058"
+    },
+    {
+      "operation": "Model Inference",
+      "latency_ms": 81.22500837635077,
+      "throughput": 12.311479185900053,
+      "timestamp": "2026-02-10T09:38:11.492600"
+    },
+    {
+      "operation": "Model Inference",
+      "latency_ms": 86.30922755327668,
+      "throughput": 11.586246666183209,
+      "timestamp": "2026-02-10T09:38:11.493516"
+    },
+    {
+      "operation": "Model Inference",
+      "latency_ms": 97.24342339869807,
+      "throughput": 10.283471776800779,
+      "timestamp": "2026-02-10T09:38:11.494226"
+    },
+    {
+      "operation": "Model Inference",
+      "latency_ms": 97.39184227456485,
+      "throughput": 10.267800430151253,
+      "timestamp": "2026-02-10T09:38:11.494489"
+    },
+    {
+      "operation": "Vector Search (Pinecone)",
+      "latency_ms": 29.98063171221538,
+      "throughput": 33.35486755579462,
+      "timestamp": "2026-02-10T09:38:11.495048"
+    },
+    {
+      "operation": "Vector Search (Pinecone)",
+      "latency_ms": 27.169859974821776,
+      "throughput": 36.8054896464942,
+      "timestamp": "2026-02-10T09:38:11.495410"
+    },
+    {
+      "operation": "Vector Search (Pinecone)",
+      "latency_ms": 38.47732433950621,
+      "throughput": 25.989333124529658,
+      "timestamp": "2026-02-10T09:38:11.496199"
+    },
+    {
+      "operation": "Vector Search (Pinecone)",
+      "latency_ms": 31.336444693729398,
+      "throughput": 31.911724823081343,
+      "timestamp": "2026-02-10T09:38:11.496560"
+    },
+    {
+      "operation": "Vector Search (Pinecone)",
+      "latency_ms": 32.347037239762315,
+      "throughput": 30.914732393814376,
+      "timestamp": "2026-02-10T09:38:11.497317"
+    },
+    {
+      "operation": "Vector Search (Pinecone)",
+      "latency_ms": 39.89681263774585,
+      "throughput": 25.06465890094471,
+      "timestamp": "2026-02-10T09:38:11.498592"
+    },
+    {
+      "operation": "Vector Search (Pinecone)",
+      "latency_ms": 38.72265494099617,
+      "throughput": 25.824675542618518,
+      "timestamp": "2026-02-10T09:38:11.499061"
+    },
+    {
+      "operation": "Vector Search (Pinecone)",
+      "latency_ms": 33.90254281363103,
+      "throughput": 29.496312577413363,
+      "timestamp": "2026-02-10T09:38:11.499276"
+    },
+    {
+      "operation": "Vector Search (Pinecone)",
+      "latency_ms": 28.446793078834965,
+      "throughput": 35.15334741700715,
+      "timestamp": "2026-02-10T09:38:11.500737"
+    },
+    {
+      "operation": "Vector Search (Pinecone)",
+      "latency_ms": 32.3613125863967,
+      "throughput": 30.901095168196512,
+      "timestamp": "2026-02-10T09:38:11.501146"
+    },
+    {
+      "operation": "Vector Search (Pinecone)",
+      "latency_ms": 36.169455359192554,
+      "throughput": 27.64763776698251,
+      "timestamp": "2026-02-10T09:38:11.501747"
+    },
+    {
+      "operation": "Vector Search (Pinecone)",
+      "latency_ms": 32.89105684920395,
+      "throughput": 30.403401282747247,
+      "timestamp": "2026-02-10T09:38:11.502216"
+    },
+    {
+      "operation": "Vector Search (Pinecone)",
+      "latency_ms": 27.421706563263776,
+      "throughput": 36.46746046577848,
+      "timestamp": "2026-02-10T09:38:11.504318"
+    },
+    {
+      "operation": "Vector Search (Pinecone)",
+      "latency_ms": 33.954930011378636,
+      "throughput": 29.45080433577363,
+      "timestamp": "2026-02-10T09:38:11.505013"
+    },
+    {
+      "operation": "Vector Search (Pinecone)",
+      "latency_ms": 35.3063670785373,
+      "throughput": 28.323503173678237,
+      "timestamp": "2026-02-10T09:38:11.506477"
+    },
+    {
+      "operation": "Image Processing",
+      "latency_ms": 51.33151887469842,
+      "throughput": 19.481208074926172,
+      "timestamp": "2026-02-10T09:38:11.507134"
+    },
+    {
+      "operation": "Image Processing",
+      "latency_ms": 53.518382646258424,
+      "throughput": 18.685168544978666,
+      "timestamp": "2026-02-10T09:38:11.508501"
+    },
+    {
+      "operation": "Image Processing",
+      "latency_ms": 53.59451668260929,
+      "throughput": 18.658625208285287,
+      "timestamp": "2026-02-10T09:38:11.508960"
+    },
+    {
+      "operation": "Image Processing",
+      "latency_ms": 49.63913197219001,
+      "throughput": 20.145396590743033,
+      "timestamp": "2026-02-10T09:38:11.510719"
+    },
+    {
+      "operation": "Image Processing",
+      "latency_ms": 69.78357535318537,
+      "throughput": 14.33001956318298,
+      "timestamp": "2026-02-10T09:38:11.511708"
+    },
+    {
+      "operation": "Image Processing",
+      "latency_ms": 59.956446345795385,
+      "throughput": 16.678773692365905,
+      "timestamp": "2026-02-10T09:38:11.512478"
+    },
+    {
+      "operation": "Image Processing",
+      "latency_ms": 47.01741539010243,
+      "throughput": 21.268714830515943,
+      "timestamp": "2026-02-10T09:38:11.513463"
+    },
+    {
+      "operation": "Image Processing",
+      "latency_ms": 70.10423883800826,
+      "throughput": 14.264472684893232,
+      "timestamp": "2026-02-10T09:38:11.515520"
+    },
+    {
+      "operation": "Image Processing",
+      "latency_ms": 52.07513439036664,
+      "throughput": 19.20302293420465,
+      "timestamp": "2026-02-10T09:38:11.516236"
+    },
+    {
+      "operation": "Image Processing",
+      "latency_ms": 44.50731755352119,
+      "throughput": 22.46821545237981,
+      "timestamp": "2026-02-10T09:38:11.517309"
+    },
+    {
+      "operation": "Image Processing",
+      "latency_ms": 50.66973180899581,
+      "throughput": 19.735648172948526,
+      "timestamp": "2026-02-10T09:38:11.518267"
+    },
+    {
+      "operation": "Image Processing",
+      "latency_ms": 46.036934740889365,
+      "throughput": 21.72168945713525,
+      "timestamp": "2026-02-10T09:38:11.519229"
+    },
+    {
+      "operation": "Image Processing",
+      "latency_ms": 57.75712297849434,
+      "throughput": 17.313881793806566,
+      "timestamp": "2026-02-10T09:38:11.522235"
+    },
+    {
+      "operation": "Image Processing",
+      "latency_ms": 66.15330120474582,
+      "throughput": 15.116403592694182,
+      "timestamp": "2026-02-10T09:38:11.523321"
+    },
+    {
+      "operation": "Image Processing",
+      "latency_ms": 53.0896558933005,
+      "throughput": 18.83606105885859,
+      "timestamp": "2026-02-10T09:38:11.525080"
+    }
+  ],
+  "efficiency": [
+    {
+      "operation": "Image Upload",
+      "memory_mb": 156.5,
+      "cpu_percent": 32.1,
+      "gpu_percent": 55.2,
+      "model_size_mb": null,
+      "timestamp": "2026-02-10T09:38:11.526982"
+    },
+    {
+      "operation": "Feature Extraction",
+      "memory_mb": 512.3,
+      "cpu_percent": 75.4,
+      "gpu_percent": 85.2,
+      "model_size_mb": 256.0,
+      "timestamp": "2026-02-10T09:38:11.527785"
+    },
+    {
+      "operation": "Model Inference",
+      "memory_mb": 384.2,
+      "cpu_percent": 68.5,
+      "gpu_percent": 92.1,
+      "model_size_mb": 128.0,
+      "timestamp": "2026-02-10T09:38:11.531464"
+    },
+    {
+      "operation": "Vector Search",
+      "memory_mb": 256.8,
+      "cpu_percent": 42.3,
+      "gpu_percent": 45.1,
+      "model_size_mb": null,
+      "timestamp": "2026-02-10T09:38:11.532450"
+    },
+    {
+      "operation": "Preprocessing",
+      "memory_mb": 128.5,
+      "cpu_percent": 45.2,
+      "gpu_percent": 62.1,
+      "model_size_mb": null,
+      "timestamp": "2026-02-10T09:38:11.533713"
+    }
+  ],
+  "timestamp": "2026-02-10T09:38:11.423463"
+}
