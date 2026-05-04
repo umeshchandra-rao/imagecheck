@@ -151,8 +151,8 @@ imagefind/
 
 #### 1. Clone the Repository
 ```bash
-git clone https://github.com/vineethkumarrao/finalcheck.git
-cd finalcheck
+git clone https://github.com/umeshchandra-rao/imagecheck.git
+cd imagecheck
 ```
 
 #### 2. Environment Setup
@@ -790,9 +790,9 @@ This project is proprietary. All rights reserved.
 
 ## 👤 Author
 
-**vineethkumarrao**
-- GitHub: [@vineethkumarrao](https://github.com/vineethkumarrao)
-- Project: [finalcheck](https://github.com/vineethkumarrao/finalcheck)
+**umeshchandra-rao**
+- GitHub: [@umeshchandra-rao](https://github.com/umeshchandra-rao)
+- Project: [imagecheck](https://github.com/umeshchandra-rao/imagecheck)
 
 ---
 
