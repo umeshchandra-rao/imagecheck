@@ -510,6 +510,8 @@ async def get_image(image_id: str):
             }
         else:
             raise HTTPException(404, "Image not found")
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Get image error: {e}")
         raise HTTPException(500, "Internal server error retrieving image")
