@@ -19,6 +19,7 @@ export interface UploadResponse {
   success: boolean;
   similar_images: SimilarImage[];
   uploaded_image?: UploadedImage;
+  processing_time?: string;
 }
 
 export interface SearchResponse {

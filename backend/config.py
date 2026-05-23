@@ -37,7 +37,7 @@ class Config:
     # Server Configuration
     HOST = os.getenv('HOST', '0.0.0.0')
     PORT = int(os.getenv('PORT', '8000'))
-    DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
+    DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
     
     # Confidence Thresholds
     HIGH_CONFIDENCE_THRESHOLD = float(os.getenv('HIGH_CONFIDENCE_THRESHOLD', '0.95'))
@@ -66,4 +66,3 @@ class Config:
 
 # Create config instance
 config = Config()
-config.validate()

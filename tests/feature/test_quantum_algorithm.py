@@ -8,10 +8,10 @@ import time
 import sys
 from pathlib import Path
 
-# Add parent directory to path
-sys.path.insert(0, str(Path(__file__).parent))
+# Add project root to path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from src.quantum.ae_qip_v3 import AEQIPAlgorithm
+from ml.quantum.ae_qip_v3 import AEQIPAlgorithm
 
 
 def test_quantum_algorithm():

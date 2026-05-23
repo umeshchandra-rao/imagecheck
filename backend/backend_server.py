@@ -4,9 +4,10 @@ import sys
 import io
 import logging
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from dotenv import load_dotenv
+from typing import List
 from fastapi import FastAPI, File, UploadFile, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -100,13 +101,23 @@ def get_quantum_algorithm():
 
 
 app = FastAPI(title='Quantum Image API', version='3.0.0')
+
+ALLOWED_ORIGINS = os.getenv('ALLOWED_ORIGINS', 'http://localhost:5173,http://localhost:3000').split(',')
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=['*'],
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=['*'],
     allow_headers=['*']
 )
+
+
+@app.on_event("startup")
+async def startup_event():
+    """Validate configuration on server startup"""
+    config.validate()
+    logger.info("✅ Configuration validated successfully")
 
 
 # Rate limiting
@@ -203,7 +214,7 @@ async def upload_image(request: Request, file: UploadFile = File(...)):
         }
     except Exception as e:
         logger.error(f"Upload error: {e}")
-        raise HTTPException(500, str(e))
+        raise HTTPException(500, "Internal server error during image upload")
 
 
 @app.post('/api/upload-and-store')
@@ -236,7 +247,7 @@ async def upload_and_store(
             'filename': file.filename,
             'category': category,
             'cloudinary_url': result['secure_url'],
-            'uploaded_at': datetime.utcnow().isoformat()
+            'uploaded_at': datetime.now(timezone.utc).isoformat()
         }
         get_pinecone_service().upsert_vector(vector_id, features, metadata)
 
@@ -268,7 +279,7 @@ async def upload_and_store(
         }
     except Exception as e:
         logger.error(f"Upload and store error: {e}")
-        raise HTTPException(500, str(e))
+        raise HTTPException(500, "Internal server error during image upload and store")
 
 
 @app.get('/api/stats')
@@ -359,7 +370,7 @@ async def search_images_quantum(request: Request, file: UploadFile = File(...)):
         }
     except Exception as e:
         logger.error(f"Quantum search error: {e}")
-        raise HTTPException(500, str(e))
+        raise HTTPException(500, "Internal server error during quantum search")
 
 
 @app.post('/api/search-quantum-detailed')
@@ -424,7 +435,7 @@ async def search_quantum_detailed(request: Request, file: UploadFile = File(...)
         }
     except Exception as e:
         logger.error(f"Quantum detailed search error: {e}")
-        raise HTTPException(500, str(e))
+        raise HTTPException(500, "Internal server error during quantum detailed search")
 
 
 @app.get('/health')
@@ -456,7 +467,7 @@ async def get_categories():
 @app.post('/api/search')
 @limiter.limit("30/minute")
 @track_api_latency("vector_search")
-async def search_by_features(request: Request, features: list):
+async def search_by_features(request: Request, features: List[float]):
     """Search images by feature vector"""
     try:
         matches = get_pinecone_service().search(
@@ -479,7 +490,7 @@ async def search_by_features(request: Request, features: list):
         }
     except Exception as e:
         logger.error(f"Search error: {e}")
-        raise HTTPException(500, str(e))
+        raise HTTPException(500, "Internal server error during search")
 
 
 @app.get('/api/image/{image_id}')
@@ -501,7 +512,7 @@ async def get_image(image_id: str):
             raise HTTPException(404, "Image not found")
     except Exception as e:
         logger.error(f"Get image error: {e}")
-        raise HTTPException(500, str(e))
+        raise HTTPException(500, "Internal server error retrieving image")
 
 
 # ==================== METRICS ENDPOINTS ====================
@@ -523,7 +534,7 @@ async def get_metrics_summary():
         }
     except Exception as e:
         logger.error(f"Metrics summary error: {e}")
-        raise HTTPException(500, str(e))
+        raise HTTPException(500, "Internal server error retrieving metrics")
 
 
 @app.post('/api/metrics/record-accuracy')
@@ -555,7 +566,7 @@ async def record_accuracy(
         }
     except Exception as e:
         logger.error(f"Record accuracy error: {e}")
-        raise HTTPException(500, str(e))
+        raise HTTPException(500, "Internal server error recording accuracy")
 
 
 @app.get('/api/metrics/export')
@@ -589,7 +600,7 @@ async def export_metrics_report():
         }
     except Exception as e:
         logger.error(f"Metrics export error: {e}")
-        raise HTTPException(500, str(e))
+        raise HTTPException(500, "Internal server error exporting metrics")
 
 
 @app.get('/api/metrics/print-summary')
@@ -608,7 +619,7 @@ async def print_metrics_summary():
         }
     except Exception as e:
         logger.error(f"Print summary error: {e}")
-        raise HTTPException(500, str(e))
+        raise HTTPException(500, "Internal server error printing summary")
 
 
 # Serve frontend static files in production
