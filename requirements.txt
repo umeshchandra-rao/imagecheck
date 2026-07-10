@@ -6,8 +6,8 @@ python-multipart>=0.0.12
 # Cloudinary Image CDN
 cloudinary>=1.44.0
 
-# Pinecone Vector Database
-pinecone>=7.0.0
+# Pinecone Vector Database (updated to v9+)
+pinecone>=9.0.0
 
 # Deep Learning & Computer Vision (CPU-only for cloud deployment - no CUDA)
 --extra-index-url https://download.pytorch.org/whl/cpu
