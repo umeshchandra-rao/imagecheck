@@ -1,5 +1,5 @@
 """
-Test Script for AE-QIP v3.0.0 Quantum Algorithm
+Test Script for AE-RIQP v3.0.0 Quantum Algorithm
 Tests quantum-enhanced similarity calculation
 """
 
@@ -11,13 +11,14 @@ from pathlib import Path
 # Add parent directory to path
 sys.path.insert(0, str(Path(__file__).parent))
 
-from src.quantum.ae_qip_v3 import AEQIPAlgorithm
+# Fixed import - use ml.quantum instead of src.quantum
+from ml.quantum.ae_qip_v3 import AEQIPAlgorithm
 
 
 def test_quantum_algorithm():
     """Test quantum algorithm functionality"""
     print("\n" + "="*70)
-    print("AE-QIP v3.0.0 - Quantum Algorithm Test")
+    print("AE-RIQP v3.0.0 - Quantum Algorithm Test")
     print("="*70 + "\n")
     
     # Initialize algorithm
@@ -31,7 +32,7 @@ def test_quantum_algorithm():
     circuit_info = algo.get_circuit_info()
     print(f"   ✓ Total Qubits: {circuit_info['total_qubits']}")
     print(f"   ✓ Encoding: {circuit_info['encoding_qubits']} qubits")
-    print(f"   ✓ Control: {circuit_info['control_qubits']} qubit")
+    print(f"   ✓ Control: {circuit_info['control_qubits']} qubits")
     print(f"   ✓ Auxiliary: {circuit_info['auxiliary_qubits']} qubits")
     print(f"   ✓ Precision: 1/{circuit_info['precision_level']}\n")
     
@@ -40,15 +41,15 @@ def test_quantum_algorithm():
     np.random.seed(42)
     
     # Identical vectors
-    v1 = np.random.randn(512)
+    v1 = np.random.rand(512)
     v1 = v1 / np.linalg.norm(v1)
     
     # Similar vector (90% similar)
-    v2 = 0.9 * v1 + 0.1 * np.random.randn(512)
+    v2 = 0.9 * v1 + 0.1 * np.random.rand(512)
     v2 = v2 / np.linalg.norm(v2)
     
     # Different vector
-    v3 = np.random.randn(512)
+    v3 = np.random.rand(512)
     v3 = v3 / np.linalg.norm(v3)
     
     print("   ✓ Vector 1: Reference (512D)")
@@ -63,14 +64,14 @@ def test_quantum_algorithm():
     )
     elapsed = (time.time() - start) * 1000
     
-    print(f"   🎯 Overall Similarity: {breakdown['similarity']:.4f}")
-    print(f"   📊 Classical Cosine: {breakdown['classical']:.4f}")
-    print(f"   ⚛️  Quantum Fidelity: {breakdown['quantum_fidelity']:.4f}")
-    print(f"   🌊 Phase Coherence: {breakdown['phase_coherence']:.4f}")
+    print(f"   🙏 Overall Similarity: {breakdown['similarity']:.4f}")
+    print(f"   📋 Classical Cosine: {breakdown['classical']:.4f}")
+    print(f"   🦞 Quantum Fidelity: {breakdown['quantum_fidelity']:.4f}")
+    print(f"   🔀 Phase Coherence: {breakdown['phase_coherence']:.4f}")
     print(f"   📈 Amplitude Est: {breakdown['amplitude_estimated']:.4f}")
     if 'entanglement' in breakdown:
         print(f"   🔗 Entanglement: {breakdown['entanglement']:.4f}")
-    print(f"   ⏱️  Time: {elapsed:.3f} ms\n")
+    print(f"   ⏱️ Time: {elapsed:.3f} ms\n")
     
     # Test 2: Similar vectors
     print("4. Test Case 2: Similar vectors (v1 vs v2)")
@@ -80,14 +81,14 @@ def test_quantum_algorithm():
     )
     elapsed = (time.time() - start) * 1000
     
-    print(f"   🎯 Overall Similarity: {breakdown['similarity']:.4f}")
-    print(f"   📊 Classical Cosine: {breakdown['classical']:.4f}")
-    print(f"   ⚛️  Quantum Fidelity: {breakdown['quantum_fidelity']:.4f}")
-    print(f"   🌊 Phase Coherence: {breakdown['phase_coherence']:.4f}")
+    print(f"   🙏 Overall Similarity: {breakdown['similarity']:.4f}")
+    print(f"   📋 Classical Cosine: {breakdown['classical']:.4f}")
+    print(f"   🦞 Quantum Fidelity: {breakdown['quantum_fidelity']:.4f}")
+    print(f"   🔀 Phase Coherence: {breakdown['phase_coherence']:.4f}")
     print(f"   📈 Amplitude Est: {breakdown['amplitude_estimated']:.4f}")
     if 'entanglement' in breakdown:
         print(f"   🔗 Entanglement: {breakdown['entanglement']:.4f}")
-    print(f"   ⏱️  Time: {elapsed:.3f} ms\n")
+    print(f"   ⏱️ Time: {elapsed:.3f} ms\n")
     
     # Test 3: Different vectors
     print("5. Test Case 3: Different vectors (v1 vs v3)")
@@ -97,14 +98,14 @@ def test_quantum_algorithm():
     )
     elapsed = (time.time() - start) * 1000
     
-    print(f"   🎯 Overall Similarity: {breakdown['similarity']:.4f}")
-    print(f"   📊 Classical Cosine: {breakdown['classical']:.4f}")
-    print(f"   ⚛️  Quantum Fidelity: {breakdown['quantum_fidelity']:.4f}")
-    print(f"   🌊 Phase Coherence: {breakdown['phase_coherence']:.4f}")
+    print(f"   🙏 Overall Similarity: {breakdown['similarity']:.4f}")
+    print(f"   📋 Classical Cosine: {breakdown['classical']:.4f}")
+    print(f"   🦞 Quantum Fidelity: {breakdown['quantum_fidelity']:.4f}")
+    print(f"   🔀 Phase Coherence: {breakdown['phase_coherence']:.4f}")
     print(f"   📈 Amplitude Est: {breakdown['amplitude_estimated']:.4f}")
     if 'entanglement' in breakdown:
         print(f"   🔗 Entanglement: {breakdown['entanglement']:.4f}")
-    print(f"   ⏱️  Time: {elapsed:.3f} ms\n")
+    print(f"   ⏱️ Time: {elapsed:.3f} ms\n")
     
     # Performance test
     print("6. Performance Benchmark (100 iterations)")
@@ -114,12 +115,12 @@ def test_quantum_algorithm():
     elapsed = time.time() - start
     avg_time = (elapsed / 100) * 1000
     
-    print(f"   ⏱️  Average Time: {avg_time:.3f} ms")
+    print(f"   ⏱️ Average Time: {avg_time:.3f} ms")
     print(f"   🚀 Throughput: {1000/avg_time:.1f} comparisons/second\n")
     
     # Summary
     print("="*70)
-    print("✅ Quantum Algorithm Test Complete")
+    print("✓ Quantum Algorithm Test Complete")
     print("="*70)
     print("\nKey Findings:")
     print(f"  • Self-similarity: ~{breakdown['similarity']:.2f} (expected ~1.00)")
