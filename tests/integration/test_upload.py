@@ -10,13 +10,13 @@ from PIL import Image
 import io
 from datetime import datetime
 
-# Add parent directory to path
-sys.path.insert(0, str(Path(__file__).parent))
+# Add project root to path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from config import config
+from backend.config import Config as config
 from services.cloudinary_service import CloudinaryImageService
 from services.pinecone_service import PineconeVectorService
-from unified_feature_extractor import UnifiedFeatureExtractor
+from ml.unified_feature_extractor import UnifiedFeatureExtractor
 
 import logging
 logging.basicConfig(level=logging.INFO)

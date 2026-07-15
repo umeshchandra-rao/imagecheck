@@ -1,5 +1,10 @@
 """Test if feature extraction has randomness"""
-from unified_feature_extractor import UnifiedFeatureExtractor
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
+from ml.unified_feature_extractor import UnifiedFeatureExtractor
 from PIL import Image
 import numpy as np
 

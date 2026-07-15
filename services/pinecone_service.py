@@ -87,12 +87,10 @@ class PineconeVectorService:
             
             # Validate dimension
             if len(features) != config.FEATURE_DIMENSION:
-                logger.warning(f"⚠️ Feature dimension mismatch: {len(features)} != {config.FEATURE_DIMENSION}")
-                # Pad or truncate if needed
-                if len(features) < config.FEATURE_DIMENSION:
-                    features = features + [0.0] * (config.FEATURE_DIMENSION - len(features))
-                else:
-                    features = features[:config.FEATURE_DIMENSION]
+                raise ValueError(
+                    f"Feature dimension mismatch: got {len(features)}, "
+                    f"expected {config.FEATURE_DIMENSION}"
+                )
             
             # Upsert to Pinecone
             self.index.upsert(
@@ -138,10 +136,10 @@ class PineconeVectorService:
                 
                 # Validate dimension
                 if len(features) != config.FEATURE_DIMENSION:
-                    if len(features) < config.FEATURE_DIMENSION:
-                        features = features + [0.0] * (config.FEATURE_DIMENSION - len(features))
-                    else:
-                        features = features[:config.FEATURE_DIMENSION]
+                    raise ValueError(
+                        f"Feature dimension mismatch in batch: got {len(features)}, "
+                        f"expected {config.FEATURE_DIMENSION}"
+                    )
                 
                 batch.append({
                     'id': item['id'],
@@ -193,10 +191,10 @@ class PineconeVectorService:
             
             # Validate dimension
             if len(query_features) != config.FEATURE_DIMENSION:
-                if len(query_features) < config.FEATURE_DIMENSION:
-                    query_features = query_features + [0.0] * (config.FEATURE_DIMENSION - len(query_features))
-                else:
-                    query_features = query_features[:config.FEATURE_DIMENSION]
+                raise ValueError(
+                    f"Query feature dimension mismatch: got {len(query_features)}, "
+                    f"expected {config.FEATURE_DIMENSION}"
+                )
             
             # Build filter
             filter_dict = None
@@ -234,7 +232,7 @@ class PineconeVectorService:
             
         except Exception as e:
             logger.error(f"❌ Search failed: {e}")
-            return []
+            raise
     
     def delete_vector(self, vector_id: str) -> bool:
         """

@@ -126,7 +126,7 @@ export const ImageUploadNew: React.FC<ImageUploadNewProps> = ({
               });
             });
           } else {
-            // Upload mode - store in Appwrite with category
+            // Upload mode - store in Cloudinary with category
             response = await uploadAndStore(
               filePreview.file,
               category,

@@ -46,21 +46,11 @@ def test_image_search():
         print("📊 SEARCH RESULTS")
         print("=" * 70)
         
-        print(f"\n✅ Status: {result.get('status', 'unknown')}")
-        print(f"   Message: {result.get('message', 'N/A')}")
-        print(f"   Total results: {result.get('total_results', 0)}")
-        print(f"   High confidence: {result.get('high_confidence_results', 0)}")
-        
-        # Check for exact match
-        exact_match = result.get('exact_match')
-        if exact_match:
-            print(f"\n🎯 EXACT MATCH FOUND!")
-            print(f"   Filename: {exact_match['filename']}")
-            print(f"   Similarity: {exact_match['similarity']:.4f} ({exact_match['similarity']*100:.2f}%)")
-            print(f"   Category: {exact_match['category']}")
+        print(f"\n✅ Success: {result.get('success', False)}")
+        print(f"   Processing time: {result.get('processing_time', 'N/A')}")
         
         # Show top 5 results
-        results = result.get('results', [])
+        results = result.get('similar_images', [])
         if results:
             print(f"\n🔝 TOP 5 RESULTS:")
             print("-" * 70)
