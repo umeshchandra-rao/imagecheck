@@ -125,7 +125,7 @@ def main():
     for category, directory in test_dirs.items():
         dir_path = Path(directory)
         if dir_path.exists():
-            images = list(dir_path.glob('*.jpg')) + list(dir_path.glob('*.png'))
+            images = list(dir_path.glob('*.jpg')) + list(dir_path.glob('*.png')) + list(dir_path.glob('*.webp'))
             if images:
                 # Upload first image from each category
                 test_image = images[0]

@@ -46,6 +46,15 @@ class Config:
     
     # Image categories
     CATEGORIES = ['healthcare', 'satellite', 'surveillance']
+
+    # Supported image formats
+    ALLOWED_IMAGE_TYPES = {
+        'image/jpeg',
+        'image/png',
+        'image/gif',
+        'image/webp',
+    }
+    ALLOWED_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.gif', '.webp'}
     
     @classmethod
     def validate(cls):

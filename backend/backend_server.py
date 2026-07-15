@@ -99,6 +99,25 @@ def get_quantum_algorithm():
     return quantum_algorithm
 
 
+def validate_image_file(file: UploadFile) -> None:
+    """Validate that the uploaded file is an allowed image format.
+
+    Checks both the declared content type and the file extension against
+    the allowlist defined in Config.  Raises HTTP 400 on rejection.
+    """
+    content_type = (file.content_type or '').lower()
+    filename = file.filename or ''
+    ext = Path(filename).suffix.lower()
+
+    if content_type not in config.ALLOWED_IMAGE_TYPES or ext not in config.ALLOWED_EXTENSIONS:
+        allowed = ', '.join(sorted(config.ALLOWED_EXTENSIONS))
+        raise HTTPException(
+            status_code=400,
+            detail=f"Unsupported image format '{ext or content_type}'. "
+                   f"Allowed formats: {allowed}"
+        )
+
+
 app = FastAPI(title='Quantum Image API', version='3.0.0')
 app.add_middleware(
     CORSMiddleware,
@@ -172,6 +191,7 @@ async def api_info():
 @track_api_latency("image_upload_search")
 async def upload_image(request: Request, file: UploadFile = File(...)):
     try:
+        validate_image_file(file)
         start_time = time.time()
         contents = await file.read()
 
@@ -215,6 +235,7 @@ async def upload_and_store(
     category: str = 'healthcare'
 ):
     try:
+        validate_image_file(file)
         start_time = time.time()
         contents = await file.read()
 
@@ -286,6 +307,7 @@ async def get_stats():
 async def search_images_quantum(request: Request, file: UploadFile = File(...)):
     """Quantum-enhanced image search with re-ranking"""
     try:
+        validate_image_file(file)
         start_time = time.time()
         contents = await file.read()
         
@@ -368,6 +390,7 @@ async def search_images_quantum(request: Request, file: UploadFile = File(...)):
 async def search_quantum_detailed(request: Request, file: UploadFile = File(...)):
     """Quantum search with full breakdown for demos and analysis"""
     try:
+        validate_image_file(file)
         start_time = time.time()
         contents = await file.read()
         

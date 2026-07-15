@@ -250,6 +250,8 @@ POST /api/search                    # Similarity search
 GET /api/search/{category}          # Category-specific search
 ```
 
+**Supported image formats:** JPEG (`.jpg`, `.jpeg`), PNG (`.png`), GIF (`.gif`), WebP (`.webp`)
+
 ### Request/Response Examples
 
 **Upload Image:**
